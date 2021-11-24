@@ -9,8 +9,9 @@
 "  ================================================================
 syntax on
 set t_Co=256
-colorscheme koehler
+" colorscheme koehler
 " colorscheme desert
+" colorscheme monokai
 
 call plug#begin('~/.vim/plugged')
 
@@ -30,9 +31,9 @@ call plug#end()
 set number
 
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=52 ctermfg=NONE guibg=NONE guifg=NONE
+highlight CursorLine cterm=NONE ctermbg=235 ctermfg=NONE guibg=NONE guifg=NONE
 set cursorcolumn
-highlight CursorColumn cterm=NONE ctermbg=52 ctermfg=NONE guibg=NONE guifg=NONE
+highlight CursorColumn cterm=NONE ctermbg=235 ctermfg=NONE guibg=NONE guifg=NONE
 
 set tabstop=4		" tab缩进
 set shiftwidth=4	
@@ -103,7 +104,7 @@ set tags+=./tags
 " =============================================================================
 " ================================ coc.nvim ===================================
 " =============================================================================
-let g:coc_global_extensions = ['coc-go', 'coc-clangd', 'coc-python', 'coc-jedi', 'coc-cfn-lint']
+let g:coc_global_extensions = ['coc-go', 'coc-clangd', 'coc-python', 'coc-jedi', 'coc-cfn-lint', 'coc-sumneko-lua']
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using
 " some
@@ -140,7 +141,9 @@ endif
 " *********************************************************************
 " ======================== 文件头模板 =================================
 " *********************************************************************
+" 对于指定的文件类型自动插入文件头模板
 " autocmd BufNewFile *.go exec ":call WESTOS()"
+" F9手动插入
 map <F9> ms:call WESTOS() <cr>'s
 function WESTOS()
 	call append(0, "//################################################")
