@@ -23,6 +23,8 @@ set nocompatible
 set ignorecase 
 " Switch to case-sensitive if there are both upper and lower.
 set smartcase 
+" Code fold
+" set foldmethod=indent
 
 " highlight search
 set hlsearch
@@ -48,14 +50,18 @@ autocmd BufNewFile *.py 0r ~/algo_competition/Template/template_algo_simple.py
 autocmd FileType python nnoremap <F5> :w <bar> exec '!pypy3 '.shellescape('%').' < input'<CR>
 " Copy the entire file contents to system clipboard by '<F4>'
 nnoremap <silent> <F4> :execute "normal! ggVGy"<CR>
+nnoremap <silent> <F3> :execute "normal! ggVGp"<CR>
 " --------------------------------------------------------------------- "
-
 
 " vim-plug
 call plug#begin()
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'morhetz/gruvbox'
+	Plug 'NLKNguyen/papercolor-theme'
+	Plug 'sainnhe/everforest'
+	Plug 'dracula/vim'
+	Plug 'joshdick/onedark.vim'
 	" Installed: coc-json, coc-clangd, coc-go
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'preservim/nerdtree'
@@ -73,14 +79,18 @@ call plug#begin()
 	Plug 'preservim/tagbar'
 call plug#end()
 
-nmap <F8> :TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
 
-" ---------------------------- theme begin ----------------------- "
-" colorscheme gruvbox
-set background=dark
-let g:airline_theme='violet'
-"let g:airline_theme='light'
-" ---------------------------- theme end ----------------------- "
+" ---------------------------- airline begin ---------------------------- "
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+nnoremap <silent><C-L>    :bn!<CR>
+nnoremap <silent><C-H>    :bp!<CR>
+" ---------------------------- airline end ---------------------------- "
+
 
 " ---------------------------- vim-commentary begin ----------------------- "
 let filetype_comment = {
@@ -92,21 +102,13 @@ let filetype_comment = {
   \ 'py': '#\ %s',
   \ 'c': '//\ %s',
   \ 'h': '//\ %s',
+  \ 'lua': '--\ %s',
   \ }
 
 for [file_type, commet_string] in items(filetype_comment)
 	exec 'autocmd FileType ' . file_type . ' set commentstring=' . commet_string
 endfor
 " ---------------------------- vim-commentary end ----------------------- "
-
-" ---------------------------- airline begin ---------------------------- "
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-nnoremap <silent><C-L>    :bn!<CR>
-nnoremap <silent><C-H>    :bp!<CR>
-" ---------------------------- airline end ---------------------------- "
 
 " ---------------------------- nerdtree begin ---------------------------- "
 " https://github.com/preservim/nerdtree
@@ -126,10 +128,10 @@ autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTr
 " ---------------------------- nerdtree end ---------------------------- "
 
 " ---------------------------- quickui begin ---------------------------- "
-" let g:quickui_color_scheme = 'gruvbox'
+let g:quickui_color_scheme = 'gruvbox'
 " let g:quickui_color_scheme = 'solarized'
 " let g:quickui_color_scheme = 'papercol light'
-let g:quickui_color_scheme = 'papercol dark'
+" let g:quickui_color_scheme = 'papercol dark'
 let g:quickui_border_style = 5
 
 function! TermExit(code) 
@@ -166,9 +168,9 @@ function! s:display_help(filename) abort
 endfunc
 
 
-nnoremap <silent><leader>py :call <SID>open_term('python3')<CR>
-nnoremap <silent><F2>   :call <SID>open_term('zsh')<CR>
-nnoremap <silent><F1>	:call <SID>display_help($HOME . '/.vim/HELP.md')<CR>
+nnoremap <silent><leader>py :call 	<SID>open_term('python3')<CR>
+nnoremap <silent><F2>   :call 		<SID>open_term('zsh')<CR>
+nnoremap <silent><F1>	:call 		<SID>display_help($HOME . '/.vim/HELP.md')<CR>
 " ---------------------------- quickui end ---------------------------- "
 
 " ---------------------------- Coc-nvim begin ---------------------------- "
@@ -374,6 +376,28 @@ endfunction
 
 nnoremap <silent>f :CtrlSFToggle<CR>
 nnoremap <silent>F	:call <SID>ctrlsf_find()<CR>
-nnoremap <silent><F3> :call <SID>ctrlsf_find()<CR>
+" nnoremap <silent><F3> :call <SID>ctrlsf_find()<CR>
 " ---------------------------- CtrlSF end ---------------------------- "
+"
+" ---------------------------- theme begin ----------------------- "
+set background=dark
+if has('termguicolor')
+	set termguicolor
+endif
+" Available values: 'hard', 'medium'(default), 'soft'.
+let g:everforest_background = 'hard'
+let g:everforest_better_performance = 1
+
+" colorscheme gruvbox 
+colorscheme PaperColor
+" autocmd FileType cpp 	colorscheme dracula
+" autocmd FileType go 	colorscheme PaperColor
+" autocmd FileType python colorscheme onedark
+" let g:solarized_termcolors=256
+" colorscheme solarized
+" let g:airline_theme='violet'
+" let g:airline_theme='everforest'
+" let g:airline_theme='light'
+" ---------------------------- theme end ----------------------- "
+
 
